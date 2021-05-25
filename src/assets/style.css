@@ -508,6 +508,8 @@ span.online::before {
 
 .logo {
     float: left;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .svg-logo {

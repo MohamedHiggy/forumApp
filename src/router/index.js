@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 /* eslint-disable indent */
 /* eslint-disable eol-last */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -6,6 +7,7 @@ import ThreadShow from '@/pages/ThreadShow.vue'
 import NotFound from '@/pages/NotFound.vue'
 import Forum from '@/pages/Forum.vue'
 import Category from '@/pages/Category.vue'
+import Profile from '@/pages/Profile.vue'
 import sourceData from '@/data'
 
 const routes = [{
@@ -47,6 +49,18 @@ const routes = [{
         props: true
     },
     {
+        path: '/me',
+        name: 'Profile',
+        component: Profile,
+        meta: { toTop: true, smoothScroll: true }
+    },
+    {
+        path: '/me/edit',
+        name: 'ProfileEdit',
+        component: Profile,
+        props: { edit: true }
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
@@ -56,5 +70,11 @@ const routes = [{
 
 export default createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    scrollBehavior(to) {
+        const scroll = {}
+        if (to.meta.toTop) scroll.top = 0
+        if (to.meta.smoothScroll) scroll.behavior = 'smooth'
+        return scroll
+    }
 })
