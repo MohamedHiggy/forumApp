@@ -11,7 +11,7 @@
                           By <a href="#">
                               {{userById(thread.userId).name}}
                             </a>,
-                          <base-data :timestamp="thread.publishedAt"/>
+                          <BaseDate :timestamp="thread.publishedAt"/>
                       </p>
                   </div>
                   <div class="activity">
@@ -24,7 +24,7 @@
                               <a href="#">{{userById(thread.userId).name}}</a>
                           </p>
                           <p class="text-xsmall text-faded">
-                            <base-data :timestamp="thread.publishedAt"/>
+                            <BaseDate :timestamp="thread.publishedAt"/>
                           </p>
                       </div>
                   </div>
@@ -35,7 +35,6 @@
 
 <script>
 import sourceData from '@/data'
-import BaseData from './BaseData'
 export default {
   name: 'ThreadList',
   props: {
@@ -43,9 +42,6 @@ export default {
       type: Array,
       required: true
     }
-  },
-  components: {
-    BaseData
   },
   data () {
     return {
