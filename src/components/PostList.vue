@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="post-date text-faded">
-                {{post.publishedAt}}
+              <base-data :timestamp="post.publishedAt"/>
             </div>
         </div>
     </div>
@@ -24,12 +24,16 @@
 
 <script>
 import sourceData from '@/data'
+import BaseData from './BaseData'
 export default {
   props: {
     posts: {
       type: Array,
       required: true
     }
+  },
+  components: {
+    BaseData
   },
   data () {
     return {
