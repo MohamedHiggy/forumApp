@@ -4,17 +4,16 @@
 </template>
 
 <script>
-import sourceData from '@/data'
 import CategoryList from '@/components/CategoryList.vue'
 export default {
   name: 'pageHome',
-  data () {
-    return {
-      categories: sourceData.categories
-    }
-  },
   components: {
     CategoryList
+  },
+  computed: {
+    categories () {
+      return this.$store.state.categories
+    }
   }
 }
 </script>
