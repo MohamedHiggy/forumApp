@@ -5,6 +5,11 @@ import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
 import BaseDate from '@/components/BaseData.vue'
+import firebase from 'firebase'
+import firebaseConfig from '@/config/firebase'
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig)
 
 const forumApp = createApp(App)
 forumApp.use(router)
