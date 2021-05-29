@@ -1,22 +1,17 @@
 <template>
-  <div class="col-full">
-    <ForumList
-        v-for="category in categories"
-        :key="category.id"
-        :forums="getForumsForcategories(category)"
-        :title="category.name"
-        :category-id="category.id"
-        />
-  </div>
+  <ForumList
+    v-for="category in categories"
+    :key="category.id"
+    :forums="getForumsForCategory(category)"
+    :title="category.name"
+    :category-id="category.id"
+  />
 </template>
 
 <script>
-import ForumList from '@/components/ForumList.vue'
-import sourceData from '@/data'
+import ForumList from '@/components/ForumList'
 export default {
-  components: {
-    ForumList
-  },
+  components: { ForumList },
   props: {
     categories: {
       required: true,
@@ -24,9 +19,12 @@ export default {
     }
   },
   methods: {
-    getForumsForcategories (category) {
-      return sourceData.forums.filter(forum => forum.categoryId === category.id)
+    getForumsForCategory (category) {
+      return this.$store.state.forums.filter(forum => forum.categoryId === category.id)
     }
   }
 }
 </script>
+
+<style scoped>
+</style>

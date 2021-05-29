@@ -1,14 +1,17 @@
-/* eslint-disable object-curly-spacing */
-/* eslint-disable space-before-function-paren */
-/* eslint-disable indent */
-/* eslint-disable eol-last */
-export const findById = (resources, id) => resources.find(event => event.id === id)
+export const findById = (resources, id) => {
+    if (!resources) return null
+    return resources.find(r => r.id === id)
+}
 
 export const upsert = (resources, resource) => {
-    const index = resources.findIndex(event => event.id === resource.id)
+    const index = resources.findIndex(p => p.id === resource.id)
     if (resource.id && index !== -1) {
         resources[index] = resource
     } else {
         resources.push(resource)
     }
+}
+export const docToResource = (doc) => {
+    if (typeof doc ? .data !== 'function') return doc
+    return {...doc.data(), id: doc.id }
 }

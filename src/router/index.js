@@ -1,66 +1,20 @@
 /* eslint-disable space-before-function-paren */
 /* eslint-disable indent */
 /* eslint-disable eol-last */
+import Home from '@/pages/Home'
+import ThreadShow from '@/pages/ThreadShow'
+import ThreadCreate from '@/pages/ThreadCreate'
+import ThreadEdit from '@/pages/ThreadEdit'
+import NotFound from '@/pages/NotFound'
+import Forum from '@/pages/Forum'
+import Category from '@/pages/Category'
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/pages/Home.vue'
-import ThreadShow from '@/pages/ThreadShow.vue'
-import NotFound from '@/pages/NotFound.vue'
-import Forum from '@/pages/Forum.vue'
-import Category from '@/pages/Category.vue'
-import Profile from '@/pages/Profile.vue'
-import ThreadCreate from '@/pages/ThreadCreate.vue'
-import ThreadEdit from '@/pages/ThreadEdit.vue'
-import sourceData from '@/data'
-
+import Profile from '@/pages/Profile'
+import store from '@/store'
 const routes = [{
         path: '/',
         name: 'Home',
         component: Home
-    },
-    {
-        path: '/thread/:id',
-        name: 'ThreadShow',
-        component: ThreadShow,
-        props: true,
-        beforeEnter: (to, from, next) => {
-            // check if thread exist
-            const threadExists = sourceData.threads.find(thread => thread.id === to.params.id)
-                // if thread exist
-            if (threadExists) {
-                return next()
-            } else {
-                next({
-                    name: 'NotFound',
-                    params: { pathMatch: to.path.substring(1).split('/') },
-                    query: to.query,
-                    hash: to.hash
-                })
-            }
-        }
-    },
-    {
-        path: '/forum/:forumId/thread/create',
-        name: 'ThreadCreate',
-        component: ThreadCreate,
-        props: true
-    },
-    {
-        path: '/thread/:id/edit',
-        name: 'ThreadEdit',
-        component: ThreadEdit,
-        props: true
-    },
-    {
-        path: '/category/:id',
-        name: 'Category',
-        component: Category,
-        props: true
-    },
-    {
-        path: '/forum/:id',
-        name: 'Forum',
-        component: Forum,
-        props: true
     },
     {
         path: '/me',
@@ -75,14 +29,59 @@ const routes = [{
         props: { edit: true }
     },
     {
+        path: '/category/:id',
+        name: 'Category',
+        component: Category,
+        props: true
+    },
+    {
+        path: '/forum/:id',
+        name: 'Forum',
+        component: Forum,
+        props: true
+    },
+    {
+        path: '/thread/:id',
+        name: 'ThreadShow',
+        component: ThreadShow,
+        props: true
+            // beforeEnter (to, from, next) {
+            //   // check if thread exists
+            //   const threadExists = findById(sourceData.threads, to.params.id)
+            //   // if exists continue
+            //   if (threadExists) {
+            //     return next()
+            //   } else {
+            //     next({
+            //       name: 'NotFound',
+            //       params: { pathMatch: to.path.substring(1).split('/') },
+            //       // preserve existing query and hash
+            //       query: to.query,
+            //       hash: to.hash
+            //     })
+            //   }
+            //   // if doesnt exist redirect to not found
+            // }
+    },
+    {
+        path: '/forum/:forumId/thread/create',
+        name: 'ThreadCreate',
+        component: ThreadCreate,
+        props: true
+    },
+    {
+        path: '/thread/:id/edit',
+        name: 'ThreadEdit',
+        component: ThreadEdit,
+        props: true
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
     }
-
 ]
-
-export default createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes,
     scrollBehavior(to) {
@@ -92,3 +91,8 @@ export default createRouter({
         return scroll
     }
 })
+router.beforeEach(() => {
+    store.dispatch('unsubscribeAllSnapshots')
+})
+
+export default router
